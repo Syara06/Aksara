@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Perpustakaan</title>
+    <title>Dashboard Aksara</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
@@ -465,8 +465,8 @@
             <i data-lucide="book-open" width="22" height="22"></i>
         </div>
         <div>
-            <div class="brand-name">Perpustakaan</div>
-            <div class="brand-sub">Sistem Manajemen</div>
+            <div class="brand-name">Aksara</div>
+            <div class="brand-sub">Perpustakaan Digital</div>
         </div>
     </div>
 
@@ -485,7 +485,7 @@
             <i data-lucide="book-plus" width="18" height="18"></i>
             <span class="nav-text">Pengajuan Peminjaman</span>
         </a>
-        <a href="#" class="nav-item">
+        <a href="{{ route('admin.pengembalian.index') }}" class="nav-item">
             <i data-lucide="book-check" width="18" height="18"></i>
             <span class="nav-text">Pengajuan Pengembalian</span>
         </a>
@@ -498,7 +498,7 @@
     <div class="sidebar-divider"></div>
 
     <div class="nav-section" style="padding-top:6px;">
-        <a href="#" class="nav-item">
+        <a href="{{ route('profile.index') }}" class="nav-item">
             <i data-lucide="user-circle" width="18" height="18"></i>
             <span class="nav-text">Akun Saya</span>
         </a>
@@ -625,7 +625,7 @@
                         <div class="aa-label">Pengajuan Peminjaman</div>
                         <div class="aa-desc">Proses permintaan pinjam dari anggota</div>
                     </a>
-                    <a href="#" class="admin-action">
+                    <a href="{{ route('admin.loans.active') }}" class="admin-action">
                         <div class="aa-icon"><i data-lucide="book-check" width="18" height="18"></i></div>
                         <div class="aa-label">Pengajuan Pengembalian</div>
                         <div class="aa-desc">Konfirmasi pengembalian buku</div>
@@ -633,7 +633,7 @@
                     <a href="admin.users.index" class="admin-action">
                         <div class="aa-icon"><i data-lucide="users" width="18" height="18"></i></div>
                         <div class="aa-label">Anggota</div>
-                        <div class="aa-desc">Kelola data anggota perpustakaan</div>
+                        <div class="aa-desc">Kelola data anggota Aksara</div>
                     </a>
                 </div>
             </div>

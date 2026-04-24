@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Anggota - Aksara</title>
+    <title>Akun Saya - Aksara</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
@@ -27,6 +27,7 @@
             --lime-pop: #b5e853;
             --cream: #f6f2ea;
             --cream-dark: #ede8dc;
+            --warm-white: #faf8f4;
             --surface: #ffffff;
             --text: #1a2b20;
             --text-soft: #5a6b60;
@@ -94,6 +95,7 @@
             color: white;
             font-size: 15px;
             font-weight: 600;
+            letter-spacing: 0.01em;
         }
 
         .sidebar-user {
@@ -128,7 +130,7 @@
             line-height: 1.2;
         }
 
-        .sidebar-user-role {
+        .sidebar-user-nisn {
             font-size: 11px;
             color: rgba(255, 255, 255, 0.38);
             margin-top: 2px;
@@ -295,81 +297,211 @@
             flex: 1;
         }
 
-        /* ── PAGE HEADER ── */
-        .page-header {
-            background: var(--ink);
-            border-radius: var(--radius-xl);
-            padding: 26px 30px;
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
+        /* ── SUCCESS ALERT ── */
+        .alert-success {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 10px;
+            background: var(--mint);
+            border: 1px solid #a7f3d0;
+            border-radius: var(--radius-sm);
+            color: #166534;
+            font-size: 13.5px;
+            font-weight: 500;
+            padding: 12px 16px;
+            margin-bottom: 24px;
         }
 
-        .page-header::before {
+        /* ── PROFILE LAYOUT ── */
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 240px minmax(0, 1fr);
+            gap: 20px;
+            max-width: 920px;
+        }
+
+        /* ── AVATAR CARD ── */
+        .avatar-card {
+            background: var(--ink);
+            border-radius: var(--radius-xl);
+            padding: 30px 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            align-self: start;
+        }
+
+        .avatar-card::before {
             content: '';
             position: absolute;
-            top: -40px;
-            right: -40px;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(181, 232, 83, 0.15) 0%, transparent 65%);
+            top: -50px;
+            right: -50px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(181, 232, 83, 0.15) 0%, transparent 70%);
             pointer-events: none;
         }
 
-        .page-header-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            background: rgba(181, 232, 83, 0.15);
-            border: 1px solid rgba(181, 232, 83, 0.25);
+        .avatar-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: radial-gradient(ellipse at 50% 110%, rgba(90, 138, 106, 0.18) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .avatar-ring {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            z-index: 1;
+        }
+
+        .avatar-ring::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px dashed rgba(181, 232, 83, 0.35);
+            animation: spin 18s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .avatar-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--sage), var(--lime-pop));
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--lime-pop);
-            flex-shrink: 0;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--ink);
+            overflow: hidden;
             position: relative;
             z-index: 1;
         }
 
-        .page-header-text {
-            position: relative;
-            z-index: 1;
+        .avatar-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .page-header-title {
+        .avatar-edit-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .avatar-ring:hover .avatar-edit-overlay {
+            opacity: 1;
+        }
+
+        .av-name {
             font-family: 'Lora', serif;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 600;
             color: white;
-            margin-bottom: 4px;
+            line-height: 1.3;
+            z-index: 1;
         }
 
-        .page-header-sub {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.45);
+        .av-role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(181, 232, 83, 0.15);
+            border: 1px solid rgba(181, 232, 83, 0.25);
+            color: var(--lime-pop);
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            z-index: 1;
         }
 
-        /* ── ERRORS ── */
-        .alert-error {
-            background: #fee2e2;
-            border: 1px solid #fca5a5;
+        .av-role-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--lime-pop);
+            border-radius: 50%;
+        }
+
+        .av-nisn {
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, 0.35);
+            font-family: monospace;
+            letter-spacing: 0.5px;
+            z-index: 1;
+        }
+
+        .change-photo-btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12.5px;
+            font-weight: 600;
+            font-family: 'Sora', sans-serif;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 8px 16px;
             border-radius: var(--radius-sm);
-            padding: 14px 18px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            color: #991b1b;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.18s;
+            z-index: 1;
         }
 
-        .alert-error ul {
-            margin-top: 6px;
-            padding-left: 18px;
+        .change-photo-btn:hover {
+            border-color: var(--lime-pop);
+            color: var(--lime-pop);
+            background: rgba(181, 232, 83, 0.08);
         }
 
-        .alert-error li {
-            margin-bottom: 3px;
+        input[type="file"] {
+            display: none;
+        }
+
+        .photo-preview {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 1;
+            margin-top: -4px;
+        }
+
+        .photo-preview img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--lime-pop);
+        }
+
+        .photo-preview-label {
+            font-size: 11px;
+            color: var(--lime-pop);
+            font-weight: 500;
         }
 
         /* ── FORM CARD ── */
@@ -378,7 +510,6 @@
             border: 1px solid var(--border);
             border-radius: var(--radius-xl);
             overflow: hidden;
-            max-width: 680px;
         }
 
         .form-section {
@@ -454,11 +585,9 @@
             background: var(--sage);
             border-radius: 50%;
             display: inline-block;
-            flex-shrink: 0;
         }
 
-        .field input,
-        .field select {
+        .field input {
             font-family: 'Sora', sans-serif;
             font-size: 13.5px;
             padding: 10px 13px;
@@ -469,161 +598,27 @@
             outline: none;
             transition: border-color 0.15s, box-shadow 0.15s;
             width: 100%;
-            appearance: none;
-            -webkit-appearance: none;
         }
 
-        .field input:focus,
-        .field select:focus {
+        .field input:focus {
             border-color: var(--sage);
             box-shadow: 0 0 0 3px rgba(90, 138, 106, 0.12);
+        }
+
+        .field input.readonly {
+            background: var(--cream);
+            color: var(--text-soft);
+            cursor: not-allowed;
+            border-style: dashed;
         }
 
         .field input::placeholder {
             color: #b0bcb5;
         }
 
-        .field input.is-invalid,
-        .field select.is-invalid {
-            border-color: #f87171;
-            box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.12);
-        }
-
-        .field-error {
-            font-size: 11.5px;
-            color: #dc2626;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .select-wrap {
-            position: relative;
-        }
-
-        .select-wrap::after {
-            content: '';
-            position: absolute;
-            right: 13px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 0;
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-top: 5px solid var(--text-soft);
-            pointer-events: none;
-        }
-
-        /* ── ROLE CARDS ── */
-        .role-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .role-option {
-            position: relative;
-        }
-
-        .role-option input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .role-label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all 0.15s;
-            background: var(--surface);
-        }
-
-        .role-label:hover {
-            border-color: var(--sage-light);
-            background: var(--cream);
-        }
-
-        .role-option input[type="radio"]:checked + .role-label {
-            border-color: var(--sage);
-            background: rgba(90, 138, 106, 0.06);
-        }
-
-        .role-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .role-icon.siswa {
-            background: var(--mint);
-            color: var(--sage);
-        }
-
-        .role-icon.admin {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
-        .role-option input:checked + .role-label .role-icon.siswa {
-            background: var(--sage);
-            color: white;
-        }
-
-        .role-option input:checked + .role-label .role-icon.admin {
-            background: #d97706;
-            color: white;
-        }
-
-        .role-name {
-            font-size: 13.5px;
-            font-weight: 600;
-            color: var(--ink);
-        }
-
-        .role-desc {
-            font-size: 11.5px;
+        .hint {
+            font-size: 11px;
             color: var(--text-soft);
-            margin-top: 2px;
-        }
-
-        .role-check {
-            margin-left: auto;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            border: 1.5px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s;
-            flex-shrink: 0;
-        }
-
-        .role-option input:checked + .role-label .role-check {
-            background: var(--sage);
-            border-color: var(--sage);
-        }
-
-        .role-option input:checked + .role-label .role-check::after {
-            content: '';
-            display: block;
-            width: 5px;
-            height: 8px;
-            border: 1.5px solid white;
-            border-top: none;
-            border-left: none;
-            transform: rotate(45deg) translate(-1px, -1px);
         }
 
         /* ── FORM FOOTER ── */
@@ -649,9 +644,6 @@
             cursor: pointer;
             transition: all 0.15s;
             text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
         }
 
         .btn-cancel:hover {
@@ -670,7 +662,7 @@
             color: white;
             cursor: pointer;
             transition: all 0.18s;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 8px;
         }
@@ -707,9 +699,12 @@
             .topbar, .content { padding-left: 18px; padding-right: 18px; }
         }
 
-        @media (max-width: 600px) {
-            .form-grid, .role-grid { grid-template-columns: 1fr; }
+        @media (max-width: 700px) {
+            .profile-layout { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
             .field.full { grid-column: span 1; }
+            .avatar-card { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; text-align: left; padding: 20px; gap: 10px; }
+            .avatar-card::before, .avatar-card::after { display: none; }
         }
     </style>
 </head>
@@ -733,32 +728,32 @@
                 @endif
                 <div>
                     <div class="sidebar-user-name">{{ Auth::user()->name }}</div>
-                    <div class="sidebar-user-role">Administrator</div>
+                    <div class="sidebar-user-nisn">NISN {{ Auth::user()->nisn }}</div>
                 </div>
             </div>
         </div>
 
         <div class="nav-wrap">
             <div class="nav-section-label">Menu</div>
-            <a href="{{ route('admin.dashboard') }}" class="nav-item">
+            <a href="{{ route('siswa.dashboard') }}" class="nav-item">
                 <i data-lucide="layout-dashboard" width="17" height="17"></i>
                 <span>Dashboard</span>
             </a>
-            <a href="{{ route('admin.users.index') }}" class="nav-item active">
-                <i data-lucide="users" width="17" height="17"></i>
-                <span>Kelola Anggota</span>
+            <a href="{{ route('siswa.buku.index') }}" class="nav-item">
+                <i data-lucide="book-plus" width="17" height="17"></i>
+                <span>Pinjam Buku</span>
             </a>
             <a href="#" class="nav-item">
-                <i data-lucide="book-copy" width="17" height="17"></i>
-                <span>Kelola Buku</span>
+                <i data-lucide="book-check" width="17" height="17"></i>
+                <span>Pengajuan Pengembalian</span>
             </a>
-            <a href="#" class="nav-item">
-                <i data-lucide="clipboard-list" width="17" height="17"></i>
-                <span>Peminjaman</span>
+            <a href="{{ route('riwayat.pinjam') }}" class="nav-item">
+                <i data-lucide="history" width="17" height="17"></i>
+                <span>Riwayat Pinjam</span>
             </a>
             <div class="sidebar-divider" style="margin-top:10px;margin-bottom:10px;"></div>
             <div class="nav-section-label">Akun</div>
-            <a href="{{ route('profile.index') }}" class="nav-item">
+            <a href="{{ route('profile.index') }}" class="nav-item active">
                 <i data-lucide="user-circle" width="17" height="17"></i>
                 <span>Akun Saya</span>
             </a>
@@ -780,11 +775,11 @@
 
         <header class="topbar">
             <div class="topbar-left">
-                <a href="{{ route('admin.users.index') }}" class="back-btn">
+                <a href="{{ Auth::user()->role == 'admin' ? route('admin.dashboard') : route('siswa.dashboard') }}" class="back-btn">
                     <i data-lucide="arrow-left" width="13" height="13"></i>
-                    Kelola Anggota
+                    Dashboard
                 </a>
-                <span class="topbar-title">Tambah Anggota</span>
+                <span class="topbar-title">Akun Saya</span>
             </div>
             <div class="topbar-date">
                 <i data-lucide="calendar" width="13" height="13"></i>
@@ -794,186 +789,189 @@
 
         <main class="content">
 
-            {{-- Page Header --}}
-            <div class="page-header">
-                <div class="page-header-icon">
-                    <i data-lucide="user-plus" width="22" height="22"></i>
-                </div>
-                <div class="page-header-text">
-                    <div class="page-header-title">Tambah User Baru</div>
-                    <div class="page-header-sub">Isi data lengkap untuk mendaftarkan anggota baru ke sistem Aksara</div>
-                </div>
-            </div>
-
-            {{-- Errors --}}
-            @if ($errors->any())
-                <div class="alert-error">
-                    <strong>Terdapat kesalahan pada form:</strong>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+            @if (session('success'))
+                <div class="alert-success">
+                    <i data-lucide="check-circle" width="16" height="16"></i>
+                    {{ session('success') }}
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('admin.users.store') }}">
-                @csrf
-                <div class="form-card">
+            <div class="profile-layout">
 
-                    {{-- Data Pribadi --}}
-                    <div class="form-section">
-                        <div class="section-head">
-                            <div class="section-icon">
-                                <i data-lucide="user" width="16" height="16"></i>
-                            </div>
-                            <div>
-                                <div class="section-title">Data Pribadi</div>
-                                <div class="section-subtitle">Informasi identitas anggota</div>
-                            </div>
+                {{-- ── AVATAR PANEL ── --}}
+                <div class="avatar-card">
+                    <div class="avatar-ring">
+                        <div class="avatar-img" id="avatarBig">
+                            @if ($user->foto)
+                                <img src="{{ Storage::url($user->foto) }}" alt="Foto Profil">
+                            @else
+                                {{ strtoupper(substr($user->name, 0, 2)) }}
+                            @endif
                         </div>
-                        <div class="form-grid">
-                            <div class="field full">
-                                <label>Nama Lengkap <span class="required-dot"></span></label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value="{{ old('name') }}"
-                                    placeholder="Masukkan nama lengkap"
-                                    required
-                                    class="{{ $errors->has('name') ? 'is-invalid' : '' }}">
-                                @error('name')
-                                    <span class="field-error"><i data-lucide="alert-circle" width="12" height="12"></i> {{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="field">
-                                <label>Nomor Telepon <span class="required-dot"></span></label>
-                                <input
-                                    type="text"
-                                    name="nomor_telepon"
-                                    value="{{ old('nomor_telepon') }}"
-                                    placeholder="08xxxxxxxxxx"
-                                    required
-                                    class="{{ $errors->has('nomor_telepon') ? 'is-invalid' : '' }}">
-                                @error('nomor_telepon')
-                                    <span class="field-error"><i data-lucide="alert-circle" width="12" height="12"></i> {{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="field">
-                                <label>Email <span class="required-dot"></span></label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value="{{ old('email') }}"
-                                    placeholder="email@contoh.com"
-                                    required
-                                    class="{{ $errors->has('email') ? 'is-invalid' : '' }}">
-                                @error('email')
-                                    <span class="field-error"><i data-lucide="alert-circle" width="12" height="12"></i> {{ $message }}</span>
-                                @enderror
-                            </div>
+                        <div class="avatar-edit-overlay" onclick="document.getElementById('fotoInput').click()">
+                            <i data-lucide="camera" width="20" height="20" style="color:white;"></i>
                         </div>
                     </div>
 
-                    {{-- Keamanan --}}
-                    <div class="form-section">
-                        <div class="section-head">
-                            <div class="section-icon">
-                                <i data-lucide="lock" width="16" height="16"></i>
-                            </div>
-                            <div>
-                                <div class="section-title">Keamanan Akun</div>
-                                <div class="section-subtitle">Password untuk masuk ke sistem</div>
-                            </div>
-                        </div>
-                        <div class="form-grid">
-                            <div class="field">
-                                <label>Password <span class="required-dot"></span></label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    placeholder="••••••••"
-                                    required
-                                    class="{{ $errors->has('password') ? 'is-invalid' : '' }}">
-                                @error('password')
-                                    <span class="field-error"><i data-lucide="alert-circle" width="12" height="12"></i> {{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="field">
-                                <label>Konfirmasi Password <span class="required-dot"></span></label>
-                                <input
-                                    type="password"
-                                    name="password_confirmation"
-                                    placeholder="••••••••"
-                                    required>
-                            </div>
-                        </div>
+                    <div class="av-name" id="displayName">{{ $user->name }}</div>
+
+                    <div class="av-role-badge">
+                        <div class="av-role-dot"></div>
+                        {{ ucfirst($user->role) }}
                     </div>
 
-                    {{-- Role --}}
-                    <div class="form-section">
-                        <div class="section-head">
-                            <div class="section-icon">
-                                <i data-lucide="shield-check" width="16" height="16"></i>
-                            </div>
-                            <div>
-                                <div class="section-title">Role Akun</div>
-                                <div class="section-subtitle">Tentukan hak akses pengguna di sistem</div>
-                            </div>
-                        </div>
-                        <div class="role-grid">
-                            <div class="role-option">
-                                <input type="radio" name="role" id="role-siswa" value="peminjam"
-                                    {{ old('role', 'peminjam') === 'peminjam' ? 'checked' : '' }}>
-                                <label class="role-label" for="role-siswa">
-                                    <div class="role-icon siswa">
-                                        <i data-lucide="graduation-cap" width="17" height="17"></i>
-                                    </div>
-                                    <div>
-                                        <div class="role-name">Siswa</div>
-                                        <div class="role-desc">Dapat meminjam buku</div>
-                                    </div>
-                                    <div class="role-check"></div>
-                                </label>
-                            </div>
-                            <div class="role-option">
-                                <input type="radio" name="role" id="role-admin" value="admin"
-                                    {{ old('role') === 'admin' ? 'checked' : '' }}>
-                                <label class="role-label" for="role-admin">
-                                    <div class="role-icon admin">
-                                        <i data-lucide="shield" width="17" height="17"></i>
-                                    </div>
-                                    <div>
-                                        <div class="role-name">Admin</div>
-                                        <div class="role-desc">Akses penuh ke sistem</div>
-                                    </div>
-                                    <div class="role-check"></div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="av-nisn">NISN · {{ $user->nisn }}</div>
 
-                    {{-- Footer --}}
-                    <div class="form-footer">
-                        <a href="{{ route('admin.users.index') }}" class="btn-cancel">
-                            <i data-lucide="x" width="13" height="13"></i>
-                            Batal
-                        </a>
-                        <button type="submit" class="btn-save">
-                            <i data-lucide="user-plus" width="14" height="14"></i>
-                            Simpan Anggota
-                        </button>
-                    </div>
+                    <button class="change-photo-btn" type="button" onclick="document.getElementById('fotoInput').click()">
+                        <i data-lucide="image-plus" width="13" height="13"></i>
+                        Ganti Foto
+                    </button>
 
+                    <div class="photo-preview" id="photoPreview">
+                        <img id="previewImg" src="" alt="Preview">
+                        <span class="photo-preview-label">Foto baru dipilih</span>
+                    </div>
                 </div>
-            </form>
+
+                {{-- ── FORM PANEL ── --}}
+                <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <input type="file" name="foto" accept="image/*" id="fotoInput">
+
+                    <div class="form-card">
+
+                        {{-- Informasi Pribadi --}}
+                        <div class="form-section">
+                            <div class="section-head">
+                                <div class="section-icon">
+                                    <i data-lucide="user" width="16" height="16"></i>
+                                </div>
+                                <div>
+                                    <div class="section-title">Informasi Pribadi</div>
+                                    <div class="section-subtitle">Data dasar akun kamu</div>
+                                </div>
+                            </div>
+                            <div class="form-grid">
+                                <div class="field full">
+                                    <label>
+                                        Nama Lengkap
+                                        <span class="required-dot"></span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value="{{ old('name', $user->name) }}"
+                                        placeholder="Nama lengkap kamu"
+                                        required
+                                        oninput="document.getElementById('displayName').textContent = this.value || '{{ $user->name }}'; document.getElementById('avatarBig').textContent = (this.value.trim().split(' ').slice(0,2).map(w=>w[0]||'').join('')).toUpperCase() || '??';">
+                                </div>
+                                <div class="field">
+                                    <label>
+                                        Email
+                                        <span class="required-dot"></span>
+                                    </label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value="{{ old('email', $user->email) }}"
+                                        placeholder="email@kamu.com"
+                                        required>
+                                </div>
+                                <div class="field">
+                                    <label>
+                                        Nomor Telepon
+                                        <span class="required-dot"></span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="nomor_telepon"
+                                        value="{{ old('nomor_telepon', $user->nomor_telepon) }}"
+                                        placeholder="08xxxxxxxxxx"
+                                        required>
+                                </div>
+                                <div class="field">
+                                    <label>NISN</label>
+                                    <input type="text" value="{{ $user->nisn }}" class="readonly" readonly disabled>
+                                </div>
+                                <div class="field">
+                                    <label>Role</label>
+                                    <input type="text" value="{{ ucfirst($user->role) }}" class="readonly" readonly disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Ganti Password --}}
+                        <div class="form-section">
+                            <div class="section-head">
+                                <div class="section-icon">
+                                    <i data-lucide="lock" width="16" height="16"></i>
+                                </div>
+                                <div>
+                                    <div class="section-title">Ganti Password</div>
+                                    <div class="section-subtitle">Kosongkan jika tidak ingin mengganti</div>
+                                </div>
+                            </div>
+                            <div class="form-grid">
+                                <div class="field">
+                                    <label>Password Baru</label>
+                                    <input type="password" name="password" placeholder="••••••••">
+                                </div>
+                                <div class="field">
+                                    <label>Konfirmasi Password Baru</label>
+                                    <input type="password" name="password_confirmation" placeholder="••••••••">
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Footer --}}
+                        <div class="form-footer">
+                            <a href="{{ Auth::user()->role == 'admin' ? route('admin.dashboard') : route('siswa.dashboard') }}" class="btn-cancel">
+                                Batalkan
+                            </a>
+                            <button type="submit" class="btn-save">
+                                <i data-lucide="save" width="14" height="14"></i>
+                                Simpan Perubahan
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
         </main>
     </div>
 
     <script>
         lucide.createIcons();
+
         const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('todayDate').textContent = new Date().toLocaleDateString('id-ID', opts);
+
+        document.getElementById('fotoInput').addEventListener('change', function (e) {
+            const preview = document.getElementById('photoPreview');
+            const img = document.getElementById('previewImg');
+            const avatarBig = document.getElementById('avatarBig');
+
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (ev) {
+                    img.src = ev.target.result;
+                    preview.style.display = 'flex';
+                    preview.style.alignItems = 'center';
+                    preview.style.gap = '8px';
+
+                    avatarBig.textContent = '';
+                    avatarBig.style.fontSize = '0';
+                    const imgEl = document.createElement('img');
+                    imgEl.src = ev.target.result;
+                    imgEl.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+                    avatarBig.appendChild(imgEl);
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
     </script>
 
 </body>

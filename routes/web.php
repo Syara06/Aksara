@@ -32,6 +32,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pinjam/{book_id}/form', [LoanController::class, 'formPinjam'])->name('pinjam.form');
     Route::post('/pinjam', [LoanController::class, 'ajukanPinjam'])->name('pinjam.ajukan');
     Route::get('/riwayat', [LoanController::class, 'riwayatPinjam'])->name('riwayat.pinjam');
+    Route::get('/pengembalian', [App\Http\Controllers\PengembalianController::class, 'index'])->name('pengembalian.index');
+    Route::get('/pengembalian/{loanId}', [App\Http\Controllers\PengembalianController::class, 'form'])->name('pengembalian.form');
+    Route::post('/pengembalian/{loanId}', [App\Http\Controllers\PengembalianController::class, 'ajukan'])->name('pengembalian.ajukan');
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 });
 
 // Admin Dashboard & Fitur Admin (hanya role admin)
@@ -49,4 +54,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/loans/pengajuan', [LoanController::class, 'daftarPengajuan'])->name('loans.pengajuan');
     Route::post('/loans/setujui/{id}', [LoanController::class, 'setujui'])->name('loans.setujui');
     Route::post('/loans/tolak/{id}', [LoanController::class, 'tolak'])->name('loans.tolak');
+    // Verifikasi Pengajuan Pengembalian
+    Route::get('/loans/active', [LoanController::class, 'daftarPeminjamanAktif'])->name('loans.active');
+    Route::post('/loans/kembali/{id}', [LoanController::class, 'prosesKembali'])->name('loans.kembali');
+    // Pengelolaan pengajuan pengembalian
+    Route::get('/pengembalian', [App\Http\Controllers\Admin\PengembalianAdminController::class, 'index'])->name('pengembalian.index');
+    Route::get('/pengembalian/{id}/tinjau', [App\Http\Controllers\Admin\PengembalianAdminController::class, 'tinjau'])->name('pengembalian.tinjau');
+    Route::post('/pengembalian/{id}/setujui', [App\Http\Controllers\Admin\PengembalianAdminController::class, 'setujui'])->name('pengembalian.setujui');
+    Route::post('/pengembalian/{id}/tolak', [App\Http\Controllers\Admin\PengembalianAdminController::class, 'tolak'])->name('pengembalian.tolak');
 });

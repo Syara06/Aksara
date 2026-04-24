@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Siswa - Perpustakaan</title>
+    <title>Dashboard Siswa - Aksara</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
@@ -900,14 +900,21 @@
         <div class="sidebar-top">
             <div class="sidebar-logo">
                 <div class="logo-dot"></div>
-                <span class="logo-text">Perpustakaan</span>
+                <span class="logo-text">Aksara</span>
             </div>
             <div class="sidebar-user">
-                <div class="sidebar-avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
-                <div>
-                    <div class="sidebar-user-name">{{ Auth::user()->name }}</div>
-                    <div class="sidebar-user-nisn">NISN {{ Auth::user()->nisn }}</div>
-                </div>
+                @if (Auth::user()->foto)
+                    <div class="sidebar-avatar" style="padding:0; overflow:hidden;">
+                        <img src="{{ Storage::url(Auth::user()->foto) }}"
+                            style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                @else
+                    <div class="sidebar-avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
+                    @endif
+                    <div>
+                        <div class="sidebar-user-name">{{ Auth::user()->name }}</div>
+                        <div class="sidebar-user-nisn">NISN {{ Auth::user()->nisn }}</div>
+                    </div>
             </div>
         </div>
 
@@ -922,10 +929,7 @@
                 <i data-lucide="book-plus" width="17" height="17"></i>
                 <span>Pinjam Buku</span>
             </a>
-            <a href="#" class="nav-item">
-                <i data-lucide="book-check" width="17" height="17"></i>
-                <span>Pengajuan Pengembalian</span>
-            </a>
+
             <a href="{{ route('riwayat.pinjam') }}" class="nav-item">
                 <i data-lucide="history" width="17" height="17"></i>
                 <span>Riwayat Pinjam</span>
@@ -934,7 +938,7 @@
             <div class="sidebar-divider" style="margin-top:10px;margin-bottom:10px;"></div>
 
             <div class="nav-section-label">Akun</div>
-            <a href="#" class="nav-item">
+            <a href="{{ route('profile.index') }}" class="nav-item">
                 <i data-lucide="user-circle" width="17" height="17"></i>
                 <span>Akun Saya</span>
             </a>
@@ -1132,4 +1136,3 @@
 </body>
 
 </html>
-    

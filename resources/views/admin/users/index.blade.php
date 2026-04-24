@@ -249,8 +249,8 @@
             <i data-lucide="book-open" width="22" height="22"></i>
         </div>
         <div>
-            <div class="brand-name">Perpustakaan</div>
-            <div class="brand-sub">Sistem Manajemen</div>
+            <div class="brand-name">Aksara</div>
+            <div class="brand-sub">Perpustakaan Digital</div>
         </div>
     </div>
 

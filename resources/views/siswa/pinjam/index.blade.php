@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog Buku - Perpustakaan</title>
+    <title>Katalog Buku - Aksara</title>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
@@ -287,57 +287,64 @@
 <body>
 
 {{-- ── SIDEBAR ── --}}
-<aside class="sidebar">
-    <div class="sidebar-top">
-        <div class="sidebar-logo">
-            <div class="logo-dot"></div>
-            <span class="logo-text">Perpustakaan</span>
-        </div>
-        <div class="sidebar-user">
-            <div class="sidebar-avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
-            <div>
-                <div class="sidebar-user-name">{{ Auth::user()->name }}</div>
-                <div class="sidebar-user-nisn">NISN {{ Auth::user()->nisn }}</div>
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="sidebar-logo">
+                <div class="logo-dot"></div>
+                <span class="logo-text">Aksara</span>
+            </div>
+            <div class="sidebar-user">
+                @if (Auth::user()->foto)
+                    <div class="sidebar-avatar" style="padding:0; overflow:hidden;">
+                        <img src="{{ Storage::url(Auth::user()->foto) }}"
+                            style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                @else
+                    <div class="sidebar-avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
+                    @endif
+                    <div>
+                        <div class="sidebar-user-name">{{ Auth::user()->name }}</div>
+                        <div class="sidebar-user-nisn">NISN {{ Auth::user()->nisn }}</div>
+                    </div>
             </div>
         </div>
-    </div>
 
-    <div class="nav-wrap">
-        <div class="nav-section-label">Menu</div>
-        <a href="{{ route('siswa.dashboard') }}" class="nav-item">
-            <i data-lucide="layout-dashboard" width="17" height="17"></i>
-            <span>Dashboard</span>
-        </a>
-        <a href="{{ route('siswa.buku.index') }}" class="nav-item active">
-            <i data-lucide="book-plus" width="17" height="17"></i>
-            <span>Pinjam Buku</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i data-lucide="book-check" width="17" height="17"></i>
-            <span>Pengajuan Pengembalian</span>
-        </a>
-        <a href="{{ route('riwayat.pinjam') }}" class="nav-item">
-            <i data-lucide="history" width="17" height="17"></i>
-            <span>Riwayat Pinjam</span>
-        </a>
-        <div class="sidebar-divider" style="margin-top:10px;margin-bottom:10px;"></div>
-        <div class="nav-section-label">Akun</div>
-        <a href="#" class="nav-item">
-            <i data-lucide="user-circle" width="17" height="17"></i>
-            <span>Akun Saya</span>
-        </a>
-    </div>
+        <div class="nav-wrap">
+            <div class="nav-section-label">Menu</div>
 
-    <div class="sidebar-footer">
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="logout-btn">
-                <i data-lucide="log-out" width="17" height="17"></i>
-                <span>Keluar</span>
-            </button>
-        </form>
-    </div>
-</aside>
+            <a href="{{ route('siswa.dashboard') }}" class="nav-item active">
+                <i data-lucide="layout-dashboard" width="17" height="17"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{{ route('siswa.buku.index') }}" class="nav-item">
+                <i data-lucide="book-plus" width="17" height="17"></i>
+                <span>Pinjam Buku</span>
+            </a>
+            
+            <a href="{{ route('riwayat.pinjam') }}" class="nav-item">
+                <i data-lucide="history" width="17" height="17"></i>
+                <span>Riwayat Pinjam</span>
+            </a>
+
+            <div class="sidebar-divider" style="margin-top:10px;margin-bottom:10px;"></div>
+
+            <div class="nav-section-label">Akun</div>
+            <a href="{{ route('profile.index') }}" class="nav-item">
+                <i data-lucide="user-circle" width="17" height="17"></i>
+                <span>Akun Saya</span>
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="logout-btn">
+                    <i data-lucide="log-out" width="17" height="17"></i>
+                    <span>Keluar</span>
+                </button>
+            </form>
+        </div>
+    </aside>
 
 {{-- ── MAIN ── --}}
 <div class="main">

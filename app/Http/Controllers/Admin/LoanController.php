@@ -52,7 +52,8 @@ class LoanController extends Controller
         return view('siswa.pinjam.riwayat', compact('loans'));
     }
 
-    // === ADMIN (hanya verifikasi pengajuan) ===
+    // === ADMIN ===
+    //Pengajuan peminjaman
     public function daftarPengajuan()
     {
         $pengajuan = Loan::where('status', 'pengajuan')->with('user', 'book')->latest()->get();
@@ -88,9 +89,12 @@ class LoanController extends Controller
         $loan = Loan::findOrFail($id);
         $loan->status = 'ditolak';
         $loan->alasan_tolak = $request->alasan_tolak;
-        $loan->verifikasi_pinjam_oleh = Auth::id(); // siapa yang menolak
+        $loan->verifikasi_pinjam_oleh = Auth::id();
         $loan->save();
 
         return redirect()->route('admin.loans.pengajuan')->with('success', 'Pengajuan ditolak.');
     }
+
+    //Pengembalian
+    
 }

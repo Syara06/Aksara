@@ -21,6 +21,14 @@ class Loan extends Model
         'verifikasi_kembali_oleh',
         'catatan',
         'alasan_tolak',
+        'return_status',
+        'return_request_date',
+        'alasan_keterlambatan',
+        'kondisi_kembali',
+        'denda_terlambat',
+        'denda_kerusakan',
+        'total_denda',
+        'catatan_admin',
     ];
 
     // Relasi ke User (peminjam)
